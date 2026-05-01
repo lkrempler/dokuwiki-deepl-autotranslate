@@ -796,10 +796,10 @@ class action_plugin_deeplautotranslate extends DokuWiki_Action_Plugin {
 
             if (!page_exists($lang_id)) {
                 // Page in target lang does not exist --> replace with absolute ID in case it was a relative ID
-                $new_link = '[[' . $resolved_id_full . $match[2] . $match[3] . ']]';
+                $new_link = '[[' . $resolved_id_full . ($match[2] ?? '') . ($match[3] ?? '') . ']]';
             } else {
                 // Page in target lang exists --> replace link
-                $new_link = '[[' . $lang_id . $match[2] . $match[3] . ']]';
+                $new_link = '[[' . $lang_id . ($match[2] ?? '') . ($match[3] ?? '') . ']]';
             }
 
             $text = str_replace($match[0], $new_link, $text);
@@ -830,7 +830,7 @@ class action_plugin_deeplautotranslate extends DokuWiki_Action_Plugin {
             if (substr($match[1], -1) == " ") $align_right = " ";
 
             $resolved_id = trim($match[2]);
-            $params = trim($match[3]);
+            $params = trim($match[3] ?? '');
 
             if($this->is_relative_link($resolved_id)) continue;
 
@@ -851,10 +851,10 @@ class action_plugin_deeplautotranslate extends DokuWiki_Action_Plugin {
 
             if (!file_exists($lang_id_fn)) {
                 // media in target lang does not exist --> replace with absolute ID in case it was a relative ID
-                $new_link = '{{' . $align_left . $resolved_id_full . $params . $align_right . $match[4] . '}}';
+                $new_link = '{{' . $align_left . $resolved_id_full . $params . $align_right . ($match[4] ?? '') . '}}';
             } else {
                 // media in target lang exists --> replace it
-                $new_link = '{{' . $align_left . $lang_id . $params . $align_right . $match[4] . '}}';
+                $new_link = '{{' . $align_left . $lang_id . $params . $align_right . ($match[4] ?? '') . '}}';
             }
 
             $text = str_replace($match[0], $new_link, $text);
